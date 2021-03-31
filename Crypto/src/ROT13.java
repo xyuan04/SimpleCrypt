@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class ROT13  {
     public int value;
 
@@ -35,6 +41,42 @@ public class ROT13  {
 
     public static String rotate(String s, Character c) {
         return s.substring(s.indexOf(c)) + s.substring(0, s.indexOf(c));
+    }
+
+    public String readFile() throws FileNotFoundException {
+        File file = new File("/Users/xiong/Projects/SimpleCrypt/sonnet18.txt");
+        Scanner scan = new Scanner(file);
+        String fileContents = "";
+
+        while (scan.hasNextLine()) {
+            fileContents = fileContents.concat((scan.nextLine() + "\n"));
+        }
+
+        return fileContents;
+    }
+
+    public void writeEncryptedFile() throws IOException {
+        FileWriter writer = new FileWriter("/Users/xiong/Projects/SimpleCrypt/sonnet18-ROT13Encrypt.txt");
+        writer.write(encrypt(readFile()));
+        writer.close();
+    }
+
+    public String readEncryptedFile() throws FileNotFoundException {
+        File file = new File("/Users/xiong/Projects/SimpleCrypt/sonnet18-ROT13Encrypt.txt");
+        Scanner scan = new Scanner(file);
+        String fileContents = "";
+
+        while (scan.hasNextLine()) {
+            fileContents = fileContents.concat((scan.nextLine() + "\n"));
+        }
+
+        return fileContents;
+    }
+
+    public void writeDecryptedFile() throws IOException {
+        FileWriter writer = new FileWriter("/Users/xiong/Projects/SimpleCrypt/sonnet18-ROT13Decrypt.txt");
+        writer.write(decrypt(readEncryptedFile()));
+        writer.close();
     }
 
 }
